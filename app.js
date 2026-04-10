@@ -19,6 +19,7 @@ const controlButtons = document.querySelectorAll(".control-button");
 
 let state = createInitialState(randomFoodIndex(GRID_SIZE), GRID_SIZE);
 let tickHandle = null;
+let pointerStart = null;
 
 function buildBoard() {
   const fragment = document.createDocumentFragment();
@@ -72,7 +73,7 @@ function render() {
     return;
   }
 
-  statusElement.textContent = "Use Arrow keys or WASD to guide the snake.";
+  statusElement.textContent = "Use keys, swipe, or touch pad to guide the snake.";
   pauseButton.textContent = "Pause";
 }
 
@@ -151,10 +152,50 @@ function handleKeydown(event) {
   applyDirection(direction);
 }
 
+function clearPointerStart() {
+  pointerStart = null;
+}
+
+function handlePointerDown(event) {
+  pointerStart = {
+    x: event.clientX,
+    y: event.clientY,
+  };
+}
+
+function handlePointerUp(event) {
+  if (!pointerStart) {
+    return;
+  }
+
+  const deltaX = event.clientX - pointerStart.x;
+  const deltaY = event.clientY - pointerStart.y;
+  const absX = Math.abs(deltaX);
+  const absY = Math.abs(deltaY);
+  const minDistance = 18;
+
+  clearPointerStart();
+
+  if (Math.max(absX, absY) < minDistance) {
+    return;
+  }
+
+  if (absX > absY) {
+    applyDirection(deltaX > 0 ? "RIGHT" : "LEFT");
+    return;
+  }
+
+  applyDirection(deltaY > 0 ? "DOWN" : "UP");
+}
+
 buildBoard();
 render();
 
 document.addEventListener("keydown", handleKeydown);
+boardElement.addEventListener("pointerdown", handlePointerDown);
+boardElement.addEventListener("pointerup", handlePointerUp);
+boardElement.addEventListener("pointercancel", clearPointerStart);
+boardElement.addEventListener("pointerleave", clearPointerStart);
 
 startButton.addEventListener("click", () => {
   state = startGame(state);

@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Snake</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -39,14 +42,40 @@
         </div>
 
         <section class="controls" aria-label="Controls">
-          <p>Arrow keys or WASD to move. Space or P to pause.</p>
+          <p>Arrow keys/WASD, swipe on board, or use the touch pad. Space or P pauses.</p>
           <div class="controls__pad">
-            <button class="control-button" data-direction="UP" type="button">Up</button>
-            <div class="controls__row">
-              <button class="control-button" data-direction="LEFT" type="button">Left</button>
-              <button class="control-button" data-direction="DOWN" type="button">Down</button>
-              <button class="control-button" data-direction="RIGHT" type="button">Right</button>
-            </div>
+            <button
+              class="control-button control-button--up"
+              data-direction="UP"
+              type="button"
+              aria-label="Move up"
+            >
+              UP
+            </button>
+            <button
+              class="control-button control-button--left"
+              data-direction="LEFT"
+              type="button"
+              aria-label="Move left"
+            >
+              LEFT
+            </button>
+            <button
+              class="control-button control-button--down"
+              data-direction="DOWN"
+              type="button"
+              aria-label="Move down"
+            >
+              DOWN
+            </button>
+            <button
+              class="control-button control-button--right"
+              data-direction="RIGHT"
+              type="button"
+              aria-label="Move right"
+            >
+              RIGHT
+            </button>
           </div>
         </section>
       </section>
